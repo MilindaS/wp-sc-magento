@@ -16,5 +16,5 @@ add_action('add_meta_boxes','boj_mbe_create');
 	function boj_mbe_function() {
 		echo 'Welcome to my meta box! ';
 	}
-	//Nothing
+	//Nothings
 ?>
