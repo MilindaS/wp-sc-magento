@@ -7,23 +7,17 @@ Version: 1.0
 Author: Makas Rock
 Author URI: http://stunningcodes.com
 */
-require(ABSPATH.'wp-load.php');
-?>
-<pre>
-<?php
-$wpdb-> show_errors();
 
 $tablename = $wpdb-> prefix . "hits";
-
-$sql = "CREATE TABLE `$tablename` (
-					`hit_id` int(11) NOT NULL AUTO_INCREMENT,
-					`hit_ip` varchar(100) NOT NULL,
-					`hit_date` datetime,
-					`post_id` int(11) NOT NULL,
-					PRIMARY KEY (`hit_id`)
-);";
-require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-var_dump( dbDelta($sql) );
-$wpdb-> print_error();
+// Insert a record
+$newdata = array(
+'hit_ip' => '127.0.0.1',
+'hit_date' => current_time( 'mysql' ),
+'post_id' => '123'
+);
+$wpdb-> insert($tablename,$newdata);
+// Update a record
+$newdata = array( 'post_id' => '456' );
+$where = array( 'post_id' => '123', 'hit_id' => 1 );
+$wpdb-> update( $tablename, $newdata, $where );
 ?>
-</pre>
