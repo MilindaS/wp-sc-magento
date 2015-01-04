@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Magento
+Plugin Name: Magento DB Query
 Plugin URI: http://stunningcodes.co.nf
 Description: A plugin to create w<div idgets in WordPress
 Version: 1.0

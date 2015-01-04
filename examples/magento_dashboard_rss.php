@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Magento
+Plugin Name: Magento Dashboard
 Plugin URI: http://stunningcodes.co.nf
 Description: A plugin to create widgets in WordPress
 Version: 1.0
