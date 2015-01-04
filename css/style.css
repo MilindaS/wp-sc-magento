@@ -1,3 +1,29 @@
 body{
 	
 }
+.sc-row{
+	width:100%;
+	margin-bottom:10px;
+	float:left;
+}
+.sc-container{
+	background: #fff;font-size: 14px;
+	padding: 8px 12px;
+	margin: 0px;
+	line-height: 1.4;
+	float:left;
+}
+.sc-container h3{
+	font-size: 14px;
+	border-bottom: 1px solid #EEE;
+	padding:5px 0px;
+}
+#container-1{
+	width:60%;
+
+}
+#container-2{
+	width:32%;
+	background:#fff;
+	margin-left:20px;
+}
