@@ -64,3 +64,9 @@ body{
 	margin: 5px 0px;
 	padding: 2px 4px;
 }
+
+/*	This refers with cron colorbox panel   */
+.cron-panel h3{
+	margin:10px;
+	font-weight:bold;
+}

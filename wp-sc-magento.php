@@ -40,19 +40,20 @@ class SC_Init{
         define( WP_SCMI_CSS_DIR, $plugin_url . 'css/' );
         define( WP_SCMI_IMG_DIR, $plugin_url . 'img/' );
         define( WP_SCMI_INC_DIR, $plugin_dir . 'inc/' );
+        
+         define( WP_SCMI_ASS_URI, $plugin_url . 'assets/' );
+
 
         wp_enqueue_style( 'style',WP_SCMI_CSS_DIR.'style.css');
+        wp_enqueue_style( 'colorbox_css',WP_SCMI_ASS_URI.'colorbox/colorbox.css');
+        wp_enqueue_script( 'colorbox_js', WP_SCMI_ASS_URI. 'colorbox/jquery.colorbox-min.js');        
     }
 
     public function sc_settings_register(){
         register_setting('sc_magento', 'rest_url');
         register_setting('sc_magento', 'rest_username');
-        register_setting('sc_magento', 'rest_api_key');
-        
-        wp_enqueue_style(
-            'magento-admin' , 
-            plugins_url('css/admin.css', __FILE__)
-        );
+        register_setting('sc_magento', 'rest_api_key');   
+             
     }
 
     public function sc_magento_setup_admin_menu(){

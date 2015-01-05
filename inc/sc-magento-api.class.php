@@ -53,6 +53,9 @@ class SC_Api {
 
     static public function display(){
         ?>
+
+
+
         <div class="wrap">
             <div class="sc-row">
                 <h2>Magento API Settings</h2>
