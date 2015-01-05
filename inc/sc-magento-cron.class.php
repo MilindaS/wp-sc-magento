@@ -4,12 +4,19 @@
 class SC_Cron {
 
     public static function init(){
+        self::displayCrons();   
+    }
+
+    static public function displayCrons(){
         $cron = _get_cron_array();
         $schedules = wp_get_schedules();
         $date_format = 'M j, Y @ G:i';
 ?>
     <div class="wrap" id="cron-gui">
-        <h2> Cron Events Scheduled </h2>
+        <h2>
+            Cron Events Scheduled 
+            <a href="http://wordpress.loc/wp-admin/post-new.php?post_type=page" class="add-new-h2">Add Cron</a>
+        </h2>
         <table class="widefat fixed">
             <thead>
                 <tr>
