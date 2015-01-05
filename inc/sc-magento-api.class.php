@@ -40,7 +40,7 @@ class SC_Api {
                                     <div class="sc-row"><img src="'.$item["image_url"].'" alt="" id="sc-widget-img"></div>
                                     <span id="sc-widget-title">'.$item["name"].'</span>
                                     <div id="sc-widget-price">SLRs '.$item["final_price_with_tax"].'.00</div>
-                                    <button id="sc-widget-button">View Product</button>
+                                    <a id="sc-widget-button" href="">View Product</a>
                                 </center>
                             </div>
                         </div>';
