@@ -1,11 +1,17 @@
 <?php
+
+require_once('sc-magento-api.class.php');
+
 class SC_Products_Widget extends WP_Widget{
 	function SC_Products_Widget() {
 		$widget_ops = array(
-			'classname' => 'Magento_widget_class',
+			'classname' => 'SC_Magento_widget_class',
 			'description' => 'Display a magento content.'
 		);
-		$this-> WP_Widget( 'Magento', 'Magento',$widget_ops );
+		$this-> WP_Widget($id_base = 'sc-magento',
+							$name = 'SC Magento',
+							$widget_options = $widget_ops,
+							$control_options = array());
 	}
 
 
@@ -43,15 +49,23 @@ function update($new_instance, $old_instance) {
 //display the widget
 function widget($args, $instance) {
 	extract($args);
-	echo $before_widget;
-	$title = apply_filters( 'widget_title', $instance['title'] );
-	$movie = empty( $instance['movie'] ) ? ' & nbsp;' : $instance['movie'];
-	$song = empty( $instance['song'] ) ? ' & nbsp;' : $instance['song'];
+	// echo $before_widget;
+	// $title = apply_filters( 'widget_title', $instance['title'] );
+	// $movie = empty( $instance['movie'] ) ? ' & nbsp;' : $instance['movie'];
+	// $song = empty( $instance['song'] ) ? ' & nbsp;' : $instance['song'];
 
-	if (!empty( $title ) ) { echo $before_title . $title . $after_title; };
-	echo '<p>Fav Movie:'.$movie.'</p>';
-	echo '<p>Fav Song:'.$song.'</p>'; 
+	// if (!empty( $title ) ) { echo $before_title . $title . $after_title; };
+	// echo '<p>Fav Movie:'.$movie.'</p>';
+	// echo '<p>Fav Song:'.$song.'</p>'; 
+	// echo $after_widget;
+	// }
+	echo $before_widget;
+	echo 'SC Magento Products';
+	$content = '<br />';
+	$content .= SC_Api::getProduct();
+	//print_r(SC_Api::getProduct());
+	echo $content;
 	echo $after_widget;
-	}
+}
 }
 ?>

@@ -48,5 +48,39 @@ class SC_Api {
 <?php
     }
 
+
+    static public function getProduct(){
+        //return 1;
+        $rest_url = get_option('rest_url');
+        $rest_username = get_option('rest_username');
+        $rest_api_key = get_option('rest_api_key');
+
+
+        $curl = curl_init($rest_url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        $curl_response = curl_exec($curl);
+
+        if ($curl_response === false) {
+            $info = curl_getinfo($curl);
+            curl_close($curl);
+            die('error occured during curl exec. Additioanl info: ' . var_export($info));
+        }
+
+        curl_close($curl);
+        $decoded = json_decode($curl_response,true);
+        if (isset($decoded->response->status) && $decoded->response->status == 'ERROR') {
+            die('error occured: ' . $decoded->response->errormessage);
+        }
+        //echo 'response ok!';
+        //var_export($decoded->response);
+        $content = '';
+        foreach($decoded as $item){
+            $content.=$item['entity_id'];
+        }
+        print_r($decoded);
+//echo 1;
+        //return $decoded;
+    }
+
 }
 ?>
