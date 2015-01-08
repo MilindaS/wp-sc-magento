@@ -30,6 +30,7 @@ class SC_Init{
         add_action('admin_init', array(__CLASS__, 'sc_settings_register'));
         add_action('admin_menu', array(__CLASS__, 'sc_magento_setup_admin_menu'));
         add_action('widgets_init', array(__CLASS__, 'sc_magento_widgets'));
+        
     }
 
     public function sc_path_conf(){
@@ -44,11 +45,13 @@ class SC_Init{
          define( WP_SCMI_ASS_URI, $plugin_url . 'assets/' );
 
 
-        wp_enqueue_style( 'style',WP_SCMI_CSS_DIR.'style.css');
+        wp_enqueue_style( 'main_style',WP_SCMI_CSS_DIR.'style.css');
         wp_enqueue_style( 'colorbox_css',WP_SCMI_ASS_URI.'colorbox/colorbox.css');
-        wp_enqueue_script( 'colorbox_js', WP_SCMI_ASS_URI. 'colorbox/jquery.colorbox-min.js');        
+       
+        wp_register_script( 'colorbox_js', WP_SCMI_ASS_URI. 'colorbox/jquery.colorbox-min.js', array( 'jquery' ));
+        wp_enqueue_script( 'colorbox_js' );
     }
-
+    
     public function sc_settings_register(){
         register_setting('sc_magento', 'rest_url');
         register_setting('sc_magento', 'rest_username');

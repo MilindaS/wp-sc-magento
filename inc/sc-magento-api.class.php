@@ -14,7 +14,7 @@ class SC_Api {
         $rest_api_key = get_option('rest_api_key');
 
 
-        $curl = curl_init($rest_url);
+        $curl = curl_init($rest_url) or die('Curl init failed');
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         $curl_response = curl_exec($curl);
 
