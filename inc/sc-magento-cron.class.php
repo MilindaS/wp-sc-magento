@@ -4,33 +4,36 @@
 class SC_Cron {
 
     public static function init(){
-        self::displayCrons();   
-
-        if(isset($_POST['cron_name']) && $_POST['cron_name']!=""){
-        	self::addCron($_POST['cron_name'],$_POST['schedule']);
+    	
+    	if(get_option('cron_status')=='on'){
+        	$cron =	get_option('cron_hook_name');
+        	$schedule = get_option('cron_schedule');
+        	self::addCron($cron,$schedule);
+        }else{
+        	$cron =	get_option('cron_hook_name');
+        	self::removeCron($cron);
         }
-        if(isset($_POST['hook_name_delete']) && $_POST['hook_name_delete']!=""){
-        	self::removeCron($_POST['hook_name_delete']);
-        }
+        
+        
     }
-	static public function removeCron($cron){
+    
+   	static public function removeCron($cron){
 		$timestamp = wp_next_scheduled($cron);
 		wp_unschedule_event( $timestamp,$cron);		
 		
 	}
 	static public function addCron($cron,$schedule){
 		
-		add_action($cron, 'boj_cron_email_reminder');
+		add_action($cron, array(__CLASS__,'sc_cron_db_add'));
 		
-		if ( !wp_next_scheduled($cron) ) {
-			//schedule the event to run hourly
-			wp_schedule_event( time(), $schedule, $cron);
-		}
+		self::removeCron($cron);
+		wp_schedule_event( time(), $schedule, $cron);
 	}
 	
-	function boj_cron_email_reminder() {
+	function sc_cron_db_add() {
 		//send scheduled email
-		wp_mail( 'you@example.com', 'Elm St. Reminde','Dont fall asleep!' );
+		//wp_mail( 'you@example.com', 'Elm St. Reminde','Dont fall asleep!' );
+		error_log('THIS IS THE START OF MY CUSTOM DEBUG');
 	}
 	
     static public function displayCrons(){
@@ -142,7 +145,7 @@ class SC_Cron {
                             </tr>
                         <?php } ?>
                     <?php } ?>
-                <?php } ?>
+                  <?php } ?>
                 <?php } ?>
             </tbody>
         </table>        

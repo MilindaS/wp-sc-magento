@@ -29,8 +29,7 @@ class SC_Init{
         add_action('init', array(__CLASS__, 'sc_path_conf'));
         add_action('admin_init', array(__CLASS__, 'sc_settings_register'));
         add_action('admin_menu', array(__CLASS__, 'sc_magento_setup_admin_menu'));
-        add_action('widgets_init', array(__CLASS__, 'sc_magento_widgets'));
-        
+        add_action('widgets_init', array(__CLASS__, 'sc_magento_widgets'));        
     }
 
     public function sc_path_conf(){
@@ -42,14 +41,17 @@ class SC_Init{
         define( WP_SCMI_IMG_DIR, $plugin_url . 'img/' );
         define( WP_SCMI_INC_DIR, $plugin_dir . 'inc/' );
         
-         define( WP_SCMI_ASS_URI, $plugin_url . 'assets/' );
+        define( WP_SCMI_ASS_URI, $plugin_url . 'assets/' );
 
 
         wp_enqueue_style( 'main_style',WP_SCMI_CSS_DIR.'style.css');
         wp_enqueue_style( 'colorbox_css',WP_SCMI_ASS_URI.'colorbox/colorbox.css');
-       
+        wp_register_script( 'main_js', WP_SCMI_JS_DIR. 'main.js', array( 'jquery' ));
+        wp_enqueue_script( 'main_js' );
         wp_register_script( 'colorbox_js', WP_SCMI_ASS_URI. 'colorbox/jquery.colorbox-min.js', array( 'jquery' ));
         wp_enqueue_script( 'colorbox_js' );
+        
+        
     }
     
     public function sc_settings_register(){
@@ -57,6 +59,12 @@ class SC_Init{
         register_setting('sc_magento', 'rest_username');
         register_setting('sc_magento', 'rest_api_key');   
              
+        register_setting('sc_magento_cron', 'cron_status');
+        register_setting('sc_magento_cron', 'cron_hook_name');
+        register_setting('sc_magento_cron', 'cron_schedule');
+        
+        require_once(dirname( __FILE__ ).'/inc/sc-magento-cron.class.php');
+        SC_Cron::init();
     }
 
     public function sc_magento_setup_admin_menu(){
@@ -75,7 +83,7 @@ class SC_Init{
             'API Settings',
             'manage_options',
             'magento_slug',
-            array(__CLASS__,'magento_api_settings')
+            array(__CLASS__,'magento_settings')
         );
         add_submenu_page(
             'magento_slug',
@@ -96,18 +104,18 @@ class SC_Init{
     }
 
     public function sc_magento_widgets(){
-        require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR.'inc/'.'sc-magento-widget.class.php');
+    	require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR.'inc/'.'sc-magento-widget.class.php');
         register_widget('SC_Products_Widget');
     }
 
-    public function magento_api_settings(){
-        require_once(WP_SCMI_INC_DIR.'sc-magento-api.class.php');
-        SC_Api::init();
+    public function magento_settings(){
+    	require_once(WP_SCMI_INC_DIR.'sc-magento-cron.class.php');
+    	require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR.'sc-magento-settings.php');        
     }
 
     public function magento_cron_settings(){
         require_once(WP_SCMI_INC_DIR.'sc-magento-cron.class.php');
-        SC_Cron::init();
+        SC_Cron::displayCrons();
     }
     public function magento_about(){
     ?>
