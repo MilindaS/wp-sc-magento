@@ -5,7 +5,7 @@ class SC_Cron {
 
     public static function init(){
     	
-    	//self::sc_cron_db_add();
+    	self::sc_cron_db_add();
     	
     	
     	add_filter( 'cron_schedules', array(__CLASS__, 'sc_cron_minute' ));
@@ -46,7 +46,24 @@ class SC_Cron {
 	static public function sc_cron_db_add() {
 		//send scheduled email
 		//wp_mail( 'you@example.com', 'Elm St. Reminde','Dont fall asleep!' );
-		error_log('THIS IS THE START OF MY CUSTOM DEBUG');
+		//error_log('THIS IS THE START OF MY CUSTOM DEBUG');
+		$products = SC_Api::getProduct();
+		//print_r($products);
+		foreach($products as $product){
+			//echo $product['entity_id'].'<br/>';
+			//echo $product['name'].'<br/>';
+			//echo $product['final_price_with_tax'].'<br/>';
+			//echo $product['image_url'].'<br/>';
+		
+		$newdata = array(
+						'wp_sc_product_id' => $product['entity_id'],
+						'wp_sc_product_name' => $product['name'],
+						'wp_sc_product_price' => $product['final_price_with_tax'],
+						'wp_sc_product_image' => $product['image_url'],
+						'wp_sc_timestamp' => current_time( 'mysql' )
+				);
+			SC_DB::insertDb($newdata);
+		}
 	}
 	
     static public function displayCrons(){

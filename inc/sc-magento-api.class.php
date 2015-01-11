@@ -31,7 +31,12 @@ class SC_Api {
         }
         //echo 'response ok!';
         //var_export($decoded->response);
-        $content = '<div class="sc-row">';
+        return $decoded;
+        
+    }
+
+    static public function display(){
+		$content = '<div class="sc-row">';
         foreach($decoded as $item){
             //$content.=$item['entity_id'];
             $content .= '<div class="sc-widget-panel">
@@ -49,15 +54,6 @@ class SC_Api {
         //print_r($decoded);
 
         return $content;
-    }
-
-    static public function display(){
-        ?>
-
-
-
-        
-<?php
     }
 
 
