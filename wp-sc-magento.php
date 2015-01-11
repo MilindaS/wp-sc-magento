@@ -104,14 +104,7 @@ class SC_Init{
     }
 
     public function sc_magento_widgets(){
-<<<<<<< HEAD
-    	require_once(dirname( __FILE__ ).'/inc/sc-magento-cron.class.php');
-    	SC_Cron::init();
-    	
-        require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR.'inc/'.'sc-magento-widget.class.php');
-=======
     	require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR.'inc/'.'sc-magento-widget.class.php');
->>>>>>> 58fec2c3b1eb862fa3db5079e80f62a9552833fc
         register_widget('SC_Products_Widget');
     }
 
