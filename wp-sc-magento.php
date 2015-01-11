@@ -113,6 +113,7 @@ class SC_Init{
     ?>
             <div class="wrap">
                 <h2>About SC Magento</h2>
+                
             </div>
     <?php
     }
