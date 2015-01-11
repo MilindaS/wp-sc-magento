@@ -5,32 +5,45 @@ class SC_Cron {
 
     public static function init(){
     	
-    	if(get_option('cron_status')=='on'){
-        	$cron =	get_option('cron_hook_name');
-        	$schedule = get_option('cron_schedule');
-        	self::addCron($cron,$schedule);
+    	//self::sc_cron_db_add();
+    	
+    	
+    	add_filter( 'cron_schedules', array(__CLASS__, 'sc_cron_minute' ));
+    	if(get_option('sc_cron_status')=='on'){
+        	$hook =	get_option('sc_cron_hook_name');
+        	$schedule = get_option('sc_cron_schedule');
+        	self::addCron($hook,$schedule);
         }else{
-        	$cron =	get_option('cron_hook_name');
-        	self::removeCron($cron);
-        }
+        	$hook =	get_option('sc_cron_hook_name');
+        	self::removeCron($hook);
+        }        
+        //self::removeCron('sc_magento_hook');
         
         
     }
-    
-   	static public function removeCron($cron){
-		$timestamp = wp_next_scheduled($cron);
-		wp_unschedule_event( $timestamp,$cron);		
-		
-	}
-	static public function addCron($cron,$schedule){
-		
-		add_action($cron, array(__CLASS__,'sc_cron_db_add'));
-		
-		self::removeCron($cron);
-		wp_schedule_event( time(), $schedule, $cron);
+    public function sc_cron_minute( $schedules ) {
+    	//create a ‘weekly’ recurrence schedule option
+    	$schedules['weekly'] = array(
+    			'interval' => 60,
+    			'display' => 'Once Weekly'
+    	);
+    	return $schedules;
+    }
+   	
+   	static public function removeCron($hook){
+   		wp_clear_scheduled_hook($hook);		
 	}
 	
-	function sc_cron_db_add() {
+	static public function addCron($hook,$schedule){
+		
+		self::removeCron($hook);
+		if ( !wp_next_scheduled($hook) ) {
+			wp_schedule_event( time(), $schedule, $hook);
+		}
+		add_action($hook, array(__CLASS__,'sc_cron_db_add'));
+	}
+	
+	static public function sc_cron_db_add() {
 		//send scheduled email
 		//wp_mail( 'you@example.com', 'Elm St. Reminde','Dont fall asleep!' );
 		error_log('THIS IS THE START OF MY CUSTOM DEBUG');
@@ -41,67 +54,6 @@ class SC_Cron {
         $schedules = wp_get_schedules();
         $date_format = 'M j, Y @ G:i';
 ?>
-
-
-    <script>
-    jQuery(document).ready(function(){
-
-    	function hi(){
-        	alert(1);};
-        
-        var html = '<div class="cron-panel">';
-        
-        
-		html += '<div class="sc-row">';
-		html += '<div class="col-md-10"><span id="sc-cb-title">Add Cron</span></div>';
-		html += '<div class="col-md-2"><a id="sc-closeBtn" onClick="parent.jQuery.fn.colorbox.close();">X</a></div>';
-		html += '</div>';
-        html +=			'<div class="sc-row">';
-        html +=    			'<form action="<?php echo "http://".$_SERVER[HTTP_HOST].$_SERVER[REQUEST_URI];?>" method="post" >';
-        html +=	'<div class="sc-row">';
-        html +=		'<div class="col-md-3">Cron Name</div>';
-        html +=		'<div class="col-md-9">';
-        html +=			'<input type="text" style="width:250px;" name="cron_name" />';
-        html +=		'</div>';
-        html +='</div>';            
-        
-        html +=	'<div class="sc-row">';
-        html +=		   		'<div class="col-md-3">Shedule</div>';
-        html +=            '<div class="col-md-9">';
-        html +=	            '<select name="schedule">';
-        html +=	            	'<option value="hourly">Hourly</option>';
-        html +=	            	'<option value="Twice Daily">Twise a day</option>';
-        html +=	            	'<option value="Once Daily">Daily</option>';
-        html +=	            	'<option value="">Weekly</option>';
-        html +=	            	'<option value="">Monthly</option>';
-        html +=	            	'<option value="">Yearly</option>';
-        html +=	            '</select>';
-        html +=            '</div>';
-        html += '</div>';
-        
-        html +=	'<div class="sc-row">';
-        html +=         '<div class="col-md-offset-3 col-md-9"><input type="submit" class="button-secondary" value="Submit"/></div>';
-        html +=     '</div>';
-        html +='</form>';
-        html +='</div>';
-        html += '</div>';
-        
-        
-
-        jQuery(document).on('click','#addCron',function(){
-        	jQuery.colorbox({
-            	html:html,
-            	opacity:0.5,
-            	transition:'elastic',
-            	width:"50%",
-            	height:"60%",
-            	preloading:false,
-            	close:''});
-        });
-
-        
-    });
-    </script>
 
     <div class="wrap" id="cron-gui">
         <h2>
@@ -118,14 +70,16 @@ class SC_Cron {
                 </tr>
             </thead>
             <tbody>
+           
                 <?php foreach ( $cron as $timestamp => $cronhooks ) { ?>
                     <?php foreach ( (array) $cronhooks as
                         $hook => $events ) { ?>
                         <?php foreach ( (array) $events as $event ) { 
                         	if(!strstr($hook,'wp_')){
                         	?>
+                        	
                             <tr>
-                            <form action="<?php echo "http://".$_SERVER[HTTP_HOST].$_SERVER[REQUEST_URI];?>" method="POST">
+                            	
                                 <td>
                                     <?php echo date_i18n( $date_format, wp_next_scheduled( $hook ) ); ?>
                                 </td>
@@ -139,15 +93,18 @@ class SC_Cron {
                                     }
                                 ?>
                                 </td>
+                                
                                 <td> <?php echo $hook; ?> <input type="hidden" value="<?php echo $hook; ?>" name="hook_name_delete" /> </td>                          
                                 <td><input type="submit" id="delete_btn" value="Delete" /></td>
-                            	</form>
+                            	
                             </tr>
+                           
                         <?php } ?>
                     <?php } ?>
                   <?php } ?>
                 <?php } ?>
             </tbody>
+             
         </table>        
     </div>
 <?php

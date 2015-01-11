@@ -47,7 +47,7 @@
                             <td scope="row" ><label for="">Status</label></td>
                             <td>:</td>
                             <td width="70%">
-                            	<input id="sc-checkb-r" type="checkbox" name="cron_status" <?php if(get_option('cron_status')=='on'){echo 'checked';}?> >
+                            	<input id="sc-checkb-r" type="checkbox" name="sc_cron_status" <?php if(get_option('sc_cron_status')=='on'){echo 'checked';}?> >
                             	<span id="sc-checkb" class="bg-inactive">
                             		<span id="sc-check"></span>
                             	</span>
@@ -58,7 +58,7 @@
                             <td scope="row" ><label for="">Hook</label></td>
                             <td>:</td>
                             <td width="70%">
-                            	<input type="hidden" name="cron_hook_name" value="sc_magento_hook" />
+                            	<input type="hidden" name="sc_cron_hook_name" value="sc_magento_hook" />
                             	sc_magento_hook
                             </td>
                         </tr>
@@ -66,10 +66,12 @@
                             <td scope="row" ><label for="" style="position:relative;top:8px">Schedule</label></td>
                             <td>:</td>
                             <td width="70%">
-                            	<select name="cron_schedule">
-				                   	<option <?php if(get_option('cron_schedule')=='hourly'){echo 'selected="selected"';}?> value="hourly" >Hourly</option>
-				                   	<option <?php if(get_option('cron_schedule')=='twicedaily'){echo 'selected="selected"';}?> value="twicedaily" >Twice a Day</option>
-				                   	<option <?php if(get_option('cron_schedule')=='daily'){echo 'selected="selected"';}?> value="daily">Daily</option>				                   				                   	
+                            	<select name="sc_cron_schedule">
+				                   	<option <?php if(get_option('sc_cron_schedule')=='hourly'){echo 'selected="selected"';}?> value="hourly" >Hourly</option>
+				                   	<option <?php if(get_option('sc_cron_schedule')=='twicedaily'){echo 'selected="selected"';}?> value="twicedaily" >Twice a Day</option>
+				                   	<option <?php if(get_option('sc_cron_schedule')=='daily'){echo 'selected="selected"';}?> value="daily">Daily</option>
+				                   	<option <?php if(get_option('sc_cron_schedule')=='weekly'){echo 'selected="selected"';}?> value="weekly">Weekly</option>
+				                   					                   					                   				                   	
                    				</select>
                             </td>
                         </tr>

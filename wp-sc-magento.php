@@ -59,9 +59,9 @@ class SC_Init{
         register_setting('sc_magento', 'rest_username');
         register_setting('sc_magento', 'rest_api_key');   
              
-        register_setting('sc_magento_cron', 'cron_status');
-        register_setting('sc_magento_cron', 'cron_hook_name');
-        register_setting('sc_magento_cron', 'cron_schedule');
+        register_setting('sc_magento_cron', 'sc_cron_status');
+        register_setting('sc_magento_cron', 'sc_cron_hook_name');
+        register_setting('sc_magento_cron', 'sc_cron_schedule');
         
         require_once(dirname( __FILE__ ).'/inc/sc-magento-cron.class.php');
         SC_Cron::init();
@@ -110,7 +110,7 @@ class SC_Init{
 
     public function magento_settings(){
     	require_once(WP_SCMI_INC_DIR.'sc-magento-cron.class.php');
-    	require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR.'sc-magento-settings.php');        
+    	require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR.'sc-magento-settings.php');    
     }
 
     public function magento_cron_settings(){
