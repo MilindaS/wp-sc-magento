@@ -117,7 +117,7 @@
                                     <td>
                                         <?php submit_button('Update','submit button-primary','cron_update'); ?>
                                     </td>
-                                </tr>
+                                </tr>                                
                             </table>
                             </form>                        
                         </div>

@@ -7,12 +7,12 @@ class SC_Api {
         SC_Api::display();
     }
     
-    static public function getProduct(){
+    static public function getProduct($rest_url){
         
-        $rest_url = get_option('rest_url');
         $rest_username = get_option('rest_username');
         $rest_api_key = get_option('rest_api_key');
 
+        
 
         $curl = curl_init($rest_url) or die('Curl init failed');
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);

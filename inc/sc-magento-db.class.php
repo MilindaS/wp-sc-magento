@@ -31,11 +31,29 @@ class SC_DB{
 		//print_r($products);
 	}
 	
-	static public function insertDb($newdata){
+	static public function insertDb($data){
 		require(ABSPATH.'wp-load.php');
 		global $wpdb;
-		$tablename = $wpdb-> prefix . "magento_products";
-		$wpdb-> insert($tablename,$newdata);
+		$table = $wpdb-> prefix . "magento_products";	
+		
+		$fields = array_keys($data);
+		$formatted_fields = array();
+		foreach ( $fields as $field ) {
+			$form = '%s';
+			$formatted_fields[] = $form;
+		}
+		$sql = "INSERT INTO `$table` (`" . implode( '`,`', $fields ) . "`) VALUES ('" . implode( "','", $formatted_fields ) . "')";
+		$sql .= " ON DUPLICATE KEY UPDATE ";
+			
+		$dup = array();
+		foreach($fields as $field) {
+			$dup[] = "`" . $field . "` = VALUES(`" . $field . "`)";
+		}
+			
+		$sql .= implode(',', $dup);
+		
+		$wpdb->query( $wpdb->prepare( $sql, $data) );
+		//$wpdb-> insert($tablename,$newdata);
 	}
 	
 	
