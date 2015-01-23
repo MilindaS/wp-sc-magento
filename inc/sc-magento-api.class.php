@@ -8,7 +8,7 @@ class SC_Api {
     }
     
     static public function getProduct(){
-        //return 1;
+        
         $rest_url = get_option('rest_url');
         $rest_username = get_option('rest_username');
         $rest_api_key = get_option('rest_api_key');
@@ -29,8 +29,7 @@ class SC_Api {
         if (isset($decoded->response->status) && $decoded->response->status == 'ERROR') {
             die('error occured: ' . $decoded->response->errormessage);
         }
-        //echo 'response ok!';
-        //var_export($decoded->response);
+        
         return $decoded;
         
     }

@@ -23,6 +23,7 @@
 	width:32%;
 	background:#fff;
 	margin-left:20px;
+	min-height: 338px;
 }
 #container-2 table th,#container-2 table td{
 	padding: 10px 10px 10px 0;

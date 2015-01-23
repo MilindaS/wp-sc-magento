@@ -29,7 +29,8 @@ class SC_Init{
         add_action('init', array(__CLASS__, 'sc_path_conf'));
         add_action('admin_init', array(__CLASS__, 'sc_settings_register'));
         add_action('admin_menu', array(__CLASS__, 'sc_magento_setup_admin_menu'));
-        add_action('widgets_init', array(__CLASS__, 'sc_magento_widgets'));        
+        add_action('widgets_init', array(__CLASS__, 'sc_magento_widgets'));  
+        add_shortcode('mage',array(__CLASS__,'magento_shortcode_function'));      
     }
 
     public function sc_path_conf(){
@@ -54,7 +55,12 @@ class SC_Init{
         
     }
     
+    public function magento_shortcode_function($attr){
+        require_once(dirname( __FILE__ ).'/inc/sc-magento-shortcode.class.php');
+        SC_DB::init();
+    }
     public function sc_settings_register(){
+
         register_setting('sc_magento', 'rest_url');
         register_setting('sc_magento', 'rest_username');
         register_setting('sc_magento', 'rest_api_key');   
@@ -62,7 +68,12 @@ class SC_Init{
         register_setting('sc_magento_cron', 'sc_cron_status');
         register_setting('sc_magento_cron', 'sc_cron_hook_name');
         register_setting('sc_magento_cron', 'sc_cron_schedule');
+
+        register_setting('sc_magento_category', 'magento_category');
+        register_setting('sc_magento_product', 'product_limit');
         
+       
+
         require_once(dirname( __FILE__ ).'/inc/sc-magento-db.class.php');
         SC_DB::init();
         
@@ -114,6 +125,8 @@ class SC_Init{
     }
 
     public function magento_settings(){
+        require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR.'inc/'.'sc-magento-utility.class.php');
+        $categories = SC_Utility::$_categories;
     	require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR.'sc-magento-settings.php');    
     }
 
@@ -124,8 +137,7 @@ class SC_Init{
     public function magento_about(){
     ?>
             <div class="wrap">
-                <h2>About SC Magento</h2>
-                
+                <h2>About SC Magento</h2>                
             </div>
     <?php
     }
