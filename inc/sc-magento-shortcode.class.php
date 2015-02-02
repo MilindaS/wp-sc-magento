@@ -1,19 +1,23 @@
 <?php
 class SC_Shortcode{
     public static function init($attr){
-        switch($attr['mage']){
-            case '':
+
+        switch($attr['cat']){
+            foreach($attr['cat'] as $category){
+                case $category:
                 $title = "This is a link";
                 $href = "http://www.google.com";
+                echo $category;
                 break;
+            }
         }
     }
 }
 ?>
+<!-- 
 
 
-
-<!-- switch($attr['mage']){
+switch($attr['mage']){
         case '1':
             $title = "This is first title";
             $href = "http://www.google.com";

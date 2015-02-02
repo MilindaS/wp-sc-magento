@@ -50,14 +50,13 @@ class SC_Init{
         wp_register_script( 'main_js', WP_SCMI_JS_DIR. 'main.js', array( 'jquery' ));
         wp_enqueue_script( 'main_js' );
         wp_register_script( 'colorbox_js', WP_SCMI_ASS_URI. 'colorbox/jquery.colorbox-min.js', array( 'jquery' ));
-        wp_enqueue_script( 'colorbox_js' );
-        
+        wp_enqueue_script( 'colorbox_js' );        
         
     }
     
     public function magento_shortcode_function($attr){
         require_once(dirname( __FILE__ ).'/inc/sc-magento-shortcode.class.php');
-        SC_DB::init();
+        SC_Shortcode::init($attr);
     }
     public function sc_settings_register(){
 

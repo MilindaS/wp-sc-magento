@@ -5,9 +5,7 @@ class SC_Cron {
 
     public static function init(){
     	
-    	self::sc_cron_db_add();
-    	
-    	
+    	self::sc_cron_db_add();    	
     	
     	if(get_option('sc_cron_status')=='on'){
         	$hook =	get_option('sc_cron_hook_name');
@@ -16,9 +14,7 @@ class SC_Cron {
         }else{
         	$hook =	get_option('sc_cron_hook_name');
         	self::removeCron($hook);
-        }        
-        //self::removeCron('sc_magento_hook');
-        
+        }
         
     }
        	
@@ -37,19 +33,15 @@ class SC_Cron {
 	
 	static public function sc_cron_db_add() {
 		// Save products to database
-        $rest_url = get_option('rest_url');
+        $rest_url = get_option('rest_url')."/api/rest/products";
         $product_limit = (get_option('product_limit')) ? get_option('product_limit'):4;
         $category_selected = get_option('magento_category');
         
-        //echo $rest_url;
-
         if(count($category_selected)>0){
             foreach($category_selected as $category){
-                //echo $category;
-                
+                                
                 $estore_rest_url = $rest_url."?category_id=".$category."&limit=".$product_limit;
-                //echo $estore_rest_url;
-                //echo '<br>';
+                
                 $products = SC_Api::getProduct($estore_rest_url);
                 //print_r($products);
                 foreach($products as $product){             
@@ -64,30 +56,8 @@ class SC_Cron {
                          );
                  SC_DB::insertDb($newdata);
                 }
-                
-                //print_r($products);
             }
         }
-        // die();
-        // if(!empty(get_option('magento_category'))){
-        //     foreach(get_option('magento_category') as $category){
-        //         echo 1;
-        //     }
-        // }
-
-		//$products = SC_Api::getProduct($rest_url);
-		//print_r($products);
-		// foreach($products as $product){				
-  //   		//print_r($products);
-  //           $newdata = array(
-  //   						'wp_sc_product_id' => $product['entity_id'],
-  //   						'wp_sc_product_name' => $product['name'],
-  //   						'wp_sc_product_price' => $product['final_price_with_tax'],
-  //   						'wp_sc_product_image' => $product['image_url'],
-  //   						'wp_sc_timestamp' => current_time( 'mysql' )
-  //   				);
-		// 	SC_DB::insertDb($newdata);
-		// }
 	}
 	
     static public function displayCrons(){

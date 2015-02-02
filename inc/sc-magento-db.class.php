@@ -10,6 +10,7 @@ class SC_DB{
 		
 		$sql = "CREATE TABLE IF NOT EXISTS `$tablename` (
 					`wp_sc_auto_id` int(11) NOT NULL AUTO_INCREMENT,
+					`wp_sc_product_category_id` int(12) NOT NULL,
 					`wp_sc_product_id` varchar(100) NOT NULL,
 					`wp_sc_product_name` varchar(100) NOT NULL,
 					`wp_sc_product_price` varchar(100) NOT NULL,

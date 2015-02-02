@@ -142,7 +142,7 @@
                         </div>
                     </div>
                     <div>
-                        <table>
+                        <table style="float:left">
                         <?php foreach($categories as $category_id=>$category_name){?>
                             <tr>
                                 <td><input type="checkbox" name="magento_category[]" value="<?php echo $category_id;?>" <?php if(in_array($category_id, get_option('magento_category'))){echo 'checked';}?>></td>
