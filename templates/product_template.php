@@ -1,13 +1,13 @@
-<div style="width:100%;background:#efefef;float:left;height:auto;padding:5px 10px;">
+<div class="sc-product-main">
 	
 	<?php
 	foreach($products as $product){
 		?>
-		<div style="max-width:150px;height:auto;padding:4px;float:left;">
-			<div style="width:100%;"><img src="<?php echo $product->wp_sc_product_image;?>" width="100%" alt=""></div>
-			<div style="width:100%;font-size:11px;"><?php echo $product->wp_sc_product_name;?></div>
-			<div style="width:100%;background:#ddddff;text-align:center;border-radius:4px;">Rs. <?php echo $product->wp_sc_product_price;?></div>
-			<a style="cursor:pointer;padding:5px 20px;background:#ddddff;text-align:center;border-radius:4px;">View</a>
+		<div class="sc-product-item">
+			<div><img src="<?php echo $product->wp_sc_product_image;?>" width="100%" alt=""></div>
+			<div class="sc-item-name" ><?php echo $product->wp_sc_product_name;?></div>
+			<div class="sc-item-price">Rs. <?php echo $product->wp_sc_product_price;?></div>
+			<a class="sc-item-btn" href="<?php echo $product->wp_sc_product_url;?>">View</a>
 		</div>
 		<?php
 		//print_r($product->wp_sc_product_name);

@@ -43,18 +43,19 @@ class SC_Cron {
                 $estore_rest_url = $rest_url."?category_id=".$category."&limit=".$product_limit;
                 
                 $products = SC_Api::getProduct($estore_rest_url);
-                //print_r($products);
+                
                 foreach($products as $product){             
-            
+                    $adv_products = SC_Api::getProduct($rest_url.'/'.$product['entity_id']);
                     $newdata = array(
                                 'wp_sc_product_category' => $category,
                                  'wp_sc_product_id' => $product['entity_id'],
                                  'wp_sc_product_name' => $product['name'],
                                  'wp_sc_product_price' => $product['final_price_with_tax'],
                                  'wp_sc_product_image' => $product['image_url'],
+                                 'wp_sc_product_url' => $adv_products['url'],
                                  'wp_sc_timestamp' => current_time( 'mysql' )
-                         );
-                 SC_DB::insertDb($newdata);
+                        );
+                    SC_DB::insertDb($newdata);
                 }
             }
         }

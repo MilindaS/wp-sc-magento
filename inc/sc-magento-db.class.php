@@ -18,6 +18,7 @@ class SC_DB{
 					`wp_sc_product_name` varchar(100) NOT NULL,
 					`wp_sc_product_price` varchar(100) NOT NULL,
 					`wp_sc_product_image` varchar(255) NOT NULL,
+					`wp_sc_product_url` varchar(255) NOT NULL,
 					`wp_sc_timestamp` DATETIME,		
 					PRIMARY KEY (`wp_sc_auto_id`)
 				);";
