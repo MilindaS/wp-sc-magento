@@ -55,7 +55,9 @@ class SC_Init{
     }
     
     public function magento_shortcode_function($attr){
-        require_once(dirname( __FILE__ ).'/inc/sc-magento-shortcode.class.php');
+        require_once(dirname(__FILE__) . '/inc/sc-magento-utility.class.php');
+        require_once(dirname(__FILE__) . '/inc/sc-magento-template.class.php');
+        require_once(dirname(__FILE__) . '/inc/sc-magento-shortcode.class.php');
         SC_Shortcode::init($attr);
     }
     public function sc_settings_register(){
@@ -74,7 +76,7 @@ class SC_Init{
        
 
         require_once(dirname( __FILE__ ).'/inc/sc-magento-db.class.php');
-        SC_DB::init();
+        SC_DB::createDb();
         
         require_once(dirname( __FILE__ ).'/inc/sc-magento-cron.class.php');
         SC_Cron::init();
@@ -119,14 +121,17 @@ class SC_Init{
     }
 
     public function sc_magento_widgets(){
-    	require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR.'inc/'.'sc-magento-widget.class.php');
+        require_once(dirname( __FILE__ ).'/inc/sc-magento-db.class.php');
+        SC_DB::createDb();
+
+    	require_once(dirname(__FILE__) . '/inc/sc-magento-widget.class.php');
         register_widget('SC_Products_Widget');
     }
 
     public function magento_settings(){
-        require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR.'inc/'.'sc-magento-utility.class.php');
+        require_once(dirname(__FILE__) . '/inc/sc-magento-utility.class.php');
         $categories = SC_Utility::$_categories;
-    	require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR.'sc-magento-settings.php');    
+    	require_once(dirname(__FILE__) . '/sc-magento-settings.php');    
     }
 
     public function magento_cron_settings(){

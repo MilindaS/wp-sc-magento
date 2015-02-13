@@ -47,7 +47,7 @@ class SC_Cron {
                 foreach($products as $product){             
             
                     $newdata = array(
-                                'wp_sc_product_category_id' => $category,
+                                'wp_sc_product_category' => $category,
                                  'wp_sc_product_id' => $product['entity_id'],
                                  'wp_sc_product_name' => $product['name'],
                                  'wp_sc_product_price' => $product['final_price_with_tax'],

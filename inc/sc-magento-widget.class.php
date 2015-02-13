@@ -62,7 +62,7 @@ function widget($args, $instance) {
 	echo $before_widget;
 	echo 'SC Magento Products';
 	$content = '<br />';
-	$content .= SC_Api::getProduct();
+	$content .= SC_DB::getDataDb();
 	//print_r(SC_Api::getProduct());
 	echo $content;
 	echo $after_widget;

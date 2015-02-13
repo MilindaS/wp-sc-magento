@@ -1,35 +1,23 @@
 <?php
 class SC_Shortcode{
     public static function init($attr){
+        $categories = SC_Utility::$_categories;
+        
+        if(in_array($attr['cat'], $categories)){
 
-        switch($attr['cat']){
-            foreach($attr['cat'] as $category){
-                case $category:
-                $title = "This is a link";
-                $href = "http://www.google.com";
-                echo $category;
-                break;
+            if(isset($attr['items']) && !is_null($attr['items'])){
+
+                $products = (SC_DB::getDataDb(array_search($attr['cat'],$categories),$attr['items']));
+                
+                SC_Template::set_product_template($products);
+                    // echo '<img src="'.$product->wp_sc_product_image.'" width="200px;" alt="">';
+                    // echo $product->wp_sc_product_name;
+                    // echo '<br>';
+                
+
             }
         }
+
     }
 }
 ?>
-<!-- 
-
-
-switch($attr['mage']){
-        case '1':
-            $title = "This is first title";
-            $href = "http://www.google.com";
-            break;
-        case '2':
-            $title = "This is second title";
-            $href = "http://www.amazon.com";
-            break;  
-        default:
-            $title = "This is default title";
-            $href = "http://www.yahoo.com";
-            break;  
-    }
-
-    return "<a href='$href'>$title</a>"; -->
